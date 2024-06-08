@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sleep Pattern Chart</title>
+    <link rel="stylesheet" type="text/css" href="sleeping.css">
+    <link rel="icon" type="image/png" href="logo.png">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['timeline']});
+        var globalData; // Store the fetched data globally
+
+        function loadWeekData() {
+            var selectedDate = new Date(document.getElementById('weekPicker').value);
+            var weekStart = new Date(selectedDate);
+            weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // Adjust to week start (Sunday)
+
+            var weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6); // End of the week (Saturday)
+
+            var weekData = globalData.filter(item => {
+                var itemDate = new Date(item.start_time);
+                return itemDate >= weekStart && itemDate <= weekEnd;
+            });
+
+            drawChart(weekData); // Redraw chart with week data
+        }
+        
+
+        function drawChart(data) {
+            var container = document.getElementById('timeline-chart');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'Date' });
+            dataTable.addColumn({ type: 'string', id: 'Type' });
+            dataTable.addColumn({ type: 'datetime', id: 'Start' });
+            dataTable.addColumn({ type: 'datetime', id: 'End' });
+            function getColorByType(type) {
+                switch (type) {
+                    case "Awake":
+                        return 'yellow'; // Color for -1
+                    case "LightSleep":
+                        return 'greenyellow'; // Color for 0
+                    case "DeepSleep":
+                        return 'green'; // Color for 1
+                    default:
+                        return 'gray'; // Default color
+                }
+            }
+            data.forEach(item => {
+                var startDate = new Date(item.start_time);
+                var endDate = new Date(item.end_time);
+                var dateLabel = startDate.toLocaleDateString();
+                console.log(dateLabel);
+
+                var color = getColorByType(item.type); // Get color based on type
+                console.log(item.type);
+
+                // Check if the session crosses midnight
+                if (startDate.getDate() === endDate.getDate()) {
+                    dataTable.addRows([
+                        [dateLabel, item.type, new Date(0, 0, 0, startDate.getHours(), startDate.getMinutes()), new Date(0, 0, 0, endDate.getHours(), endDate.getMinutes())]
+                    ]);
+                    console.log(color);
+
+                } else {
+                    // Split into two parts: before and after midnight
+                    var midNight = new Date(startDate);
+                    midNight.setHours(24, 0, 0, 0); // Set to midnight
+
+                    // Part before midnight
+                    dataTable.addRows([
+                        [dateLabel, item.type, new Date(0, 0, 0, startDate.getHours(), startDate.getMinutes()), new Date(0, 0, 0, 23, 59, 59)]
+                    ]);
+
+                    // Part after midnight
+                    var nextDayLabel = endDate.toLocaleDateString();
+                    
+                    dataTable.addRows([
+                        [nextDayLabel, item.type, new Date(0, 0, 0, 0, 0, 0), new Date(0, 0, 0, endDate.getHours(), endDate.getMinutes())]
+                    ]);
+                }
+            });
+
+            chart.draw(dataTable);
+        }
+
+        // Initial fetch of data
+        fetch('sleeping_fetch.php')
+            .then(response => response.json())
+            .then(data => {
+                globalData = data; // Store the data globally
+                drawChart(data); // Draw initial chart with all data
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Sleep Pattern Chart</h2>
+        </div>
+        <div class="navigation">
+            <button onclick="window.location.href = 'pwd_dashboard.php';">Home</button>
+        </div>
+        
+        <div class="interaction-area">
+            <div class="date-picker">
+                <label for="weekPicker">Select a week:</label>
+                <input type="date" id="weekPicker" onchange="loadWeekData()">
+            </div>
+        </div>
+
+        <div id="timeline-chart" style="height: 500px;"></div>
+
+        <div class="footer">
+            <p>&copy; 2024 Anabel 2.0. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+}
+
+.login-form {
+    width: 300px;
+    padding: 40px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+input[type="text"],
+input[type="password"],
+.select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+.user-type {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; /* Remove default arrow icon in IE and Firefox */
+    position: relative;
+}
+
+/* Custom arrow icon */
+.user-type {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 50%;
+}
+
+.login-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background-image: linear-gradient(to right, #3227b0 , #40a6b1);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-image: linear-gradient(to left, #3227b0 , #40a6b1);
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color: #6c757d;
+    text-decoration: none;
+    margin-top: -10px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}

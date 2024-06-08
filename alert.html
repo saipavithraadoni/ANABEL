@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Elopement Alert</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Replace these placeholders with your Infobip credentials
+            const infobipApiKey = 'e1cfd1709b8dac0b5b1ea5ad5ee78a55-0d63a7a1-1fca-439e-999b-7beb53c74e9c';
+            const infobipBaseURL = '9lzp43.api.infobip.com';
+
+            // Replace this with the actual phone number where you want to send alerts
+            const recipientPhoneNumber = '+44 7765830123';
+
+            // Function to send an alert message
+            function sendAlertMessage(message) {
+                const requestData = {
+                    from: 'ANABEL', // Replace with your sender ID
+                    to: recipientPhoneNumber,
+                    text: message
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: infobipBaseURL,
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('apiUsername:' + infobipApiKey),
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    data: JSON.stringify(requestData),
+                    success: function (response) {
+                        console.log('Message sent successfully:', response);
+                    },
+                    error: function (error) {
+                        console.error('Error sending message:', error);
+                    }
+                });
+            }
+
+            // Example: Trigger an alert when the elopement is identified
+            $('#identifyElopementButton').click(function () {
+                // Replace this message with your actual alert message
+                const alertMessage = 'Patient elopement identified!';
+
+                // Send the alert message
+                sendAlertMessage(alertMessage);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Patient Elopement Monitoring</h1>
+    
+    <!-- Button to simulate elopement identification -->
+    <button id="identifyElopementButton">Identify Elopement</button>
+</body>
+</html>

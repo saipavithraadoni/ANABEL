@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hydration Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link rel="stylesheet" href="hydration.css">
+    <style>
+        .navigation button {
+            background-image: linear-gradient(to right, rgba(50, 39, 176, 0.7), rgba(64, 166, 177, 0.7));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Hydration</h1>
+    <p>Goal: 2 liters (2000 ml)</p>
+    <div class="navigation">
+        <button onclick="window.location.href = 'pwd_dashboard.php';">Home</button>
+    </div>
+    </br>
+    <div>
+        <label for="waterInput">Select Water Intake (ml):</label>
+        <select id="waterInput">
+            <option value="50">50 ml</option>
+            <option value="100">100 ml</option>
+            <option value="250" selected>250 ml</option>
+            <option value="500">500 ml</option>
+        </select>
+        <img src="hydration-button.png" alt="Log" onclick="logWater()">
+    </div>
+
+    <div id="chart-container">
+        <canvas id="waterChart"></canvas>
+    </div>
+    <script>
+        let totalConsumed = 0; // Total ml consumed
+        const goal = 2000; // Goal: 2 liters (2000 ml)
+        const remaining = goal - totalConsumed; // Remaining ml
+        let waterChart;
+
+        function logWater() {
+            if (totalConsumed >= goal) {
+                alert("You've reached your hydration goal of 2000 ml!");
+                return; // Stop logging water after reaching the goal
+            }
+            
+            const waterInput = document.getElementById('waterInput');
+            const amount = parseInt(waterInput.value, 10);
+            
+            if (!isNaN(amount) && amount >= 1) {
+                totalConsumed += amount;
+
+                if (totalConsumed >= goal) {
+                    totalConsumed = goal;
+                    alert("Congratulations! You've reached your hydration goal of 2000 ml!");
+                }
+
+                updateChart();
+            }
+            
+            waterInput.value = "250"; // Reset input field to 250 ml
+        }
+
+        function updateChart() {
+            if (waterChart) {
+                const consumedPercentage = (totalConsumed / goal) * 100;
+                const remainingPercentage = 100 - consumedPercentage;
+
+                waterChart.data.datasets[0].data = [consumedPercentage, remainingPercentage];
+                waterChart.update();
+            } else {
+                const ctx = document.getElementById('waterChart').getContext('2d');
+                const data = {
+                    labels: ['Consumed', 'Remaining'],
+                    datasets: [{
+                        data: [0, 100],
+                        backgroundColor: ['#32cd32', '#f0f0f0'],
+                    }],
+                };
+
+                const options = {
+                    responsive: true,
+                    cutoutPercentage: 70, // Set the cutout percentage to create a hollow center
+                };
+
+                waterChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: options,
+
+                });
+            }
+        }
+
+        updateChart(); // Initialize the chart
+    </script>
+    <div class="footer">
+        <p>&copy; 2024 Anabel 2.0. All rights reserved.</p>
+    </div>
+</body>
+</html>

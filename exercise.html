@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Exercise</title>
+    <link rel="stylesheet" href="exercise.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <button onclick="window.location.href = 'pwd_dashboard.php';">Home</button>
+        </div>
+        <div class="header">
+            <h2>Physical Exercise</h2>
+        </div>
+        <div id="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/9nDBY2tH3lI" frameborder="0" allowfullscreen></iframe>
+            <button onclick="markAllAsDone()">Mark All Exercises as Done</button>
+        </div>
+        <div>
+        <ul>
+            <li>
+                <img src="marching.png" alt="Marching"> Marching
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="turning.png" alt="Turning"> Turning the upper body from side to side
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="raising-heels.png" alt="Raising Heels"> Raising the heels and toes
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="raising-arms.png" alt="Raising Arms"> Raising the arms towards the ceiling
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="raising-arm-leg.png" alt="Raising Arm and Leg"> Raising the opposite arm and leg
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="bending-leg.png" alt="Bending Legs"> Bending the legs
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="clap.png" alt="Clapping Under Legs"> Clapping under the legs
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="cycling.png" alt="Bicycling Legs"> Bicycling the legs
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="circles-arms.png" alt="Circles with Arms"> Making circles with the arms
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+            <li>
+                <img src="sit-stand.png" alt="Sitting to Standing"> Practising moving from sitting to standing
+                <button onclick="markAsDone(this)">Mark as Done</button>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <script>
+        function markAsDone(button) {
+            const listItem = button.parentElement; // Get the parent <li> element
+            listItem.classList.add("done");
+
+            // Disable the button
+            button.disabled = true;
+
+            // Replace the button with a new image
+            const img = document.createElement("img");
+            img.src = "done.png"; // Replace with the path to your done image
+            img.alt = "Done";
+            img.classList.add("done-image");
+
+            // Remove the existing button and append the new image
+            listItem.removeChild(button);
+            listItem.appendChild(img);
+        }
+
+        function markAllAsDone() {
+            const exerciseItems = document.querySelectorAll("ul li");
+            exerciseItems.forEach((item) => {
+                item.classList.add("done");
+                const btn = item.querySelector("button");
+                if (btn) {
+                    // Call markAsDone for each button
+                    markAsDone(btn);
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Exercises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #007BFF;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            transition: opacity 0.3s ease-in-out; /* Add a smooth transition */
+        }
+
+        li.done {
+            opacity: 0.5; /* Reduced opacity for completed exercise */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Mental Health Exercises</h2>
+
+    <ul id="exerciseList">
+        <li>
+            Mindful Breathing
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <li>
+            Positive Affirmations
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <li>
+            Gratitude Journaling
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <li>
+            Visualization Exercise
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <!-- Add more exercises as needed -->
+    </ul>
+
+    <script>
+        function markAsDone(button) {
+            const listItem = button.parentElement; // Get the parent <li> element
+            listItem.classList.toggle("done");
+
+            // Disable the button
+            button.disabled = true;
+        }
+
+        function scheduleExerciseAlert(hour, minute, listItem) {
+            const currentTime = new Date();
+            const scheduledTime = new Date(currentTime);
+            scheduledTime.setHours(hour, minute, 0, 0);
+
+            const timeDiff = scheduledTime - currentTime;
+
+            if (timeDiff > 0 && timeDiff <= 15 * 60 * 1000) {
+                reminderTimer = setTimeout(() => {
+                    alert("It's time for your mental health exercises!");
+                    listItem.style.backgroundColor = "#d4edda"; // Change background color to indicate active time
+                }, timeDiff);
+            }
+        }
+
+        const exerciseList = document.getElementById("exerciseList").querySelectorAll("li");
+
+        // Schedule alerts for 11:00 AM and 4:00 PM
+        scheduleExerciseAlert(11, 0, exerciseList[0]);
+        scheduleExerciseAlert(16, 0, exerciseList[0]); // You can adjust the time for additional exercises
+
+    </script>
+</body>
+</html>

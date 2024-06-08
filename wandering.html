@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wandering Area Chart - Google Charts</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var container = document.getElementById('area-chart');
+            var chart = new google.visualization.AreaChart(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'Time' });
+            dataTable.addColumn({ type: 'number', id: 'Wandering' });
+
+            // Simulated data for wandering
+            var wanderingData = [
+                ['00:00', 0],
+                ['01:00', 0],
+                ['02:00', 0],
+                ['03:00', 0],
+                ['04:00', 0],
+                ['05:00', 0],
+                ['06:00', 0],
+                ['07:00', 0],
+                ['08:00', 0],
+                ['09:00', 0],
+                ['10:00', 0],
+                ['11:00', 0],
+                ['12:00', 1],
+                ['13:00', 0],
+                ['14:00', 0],
+                ['15:00', 0],
+                ['16:00', 0],
+                ['17:00', 0],
+                ['18:00', 0],
+                ['19:00', 0],
+                ['20:00', 0],
+                ['21:00', 1],
+                ['22:00', 0],
+                ['23:00', 0],
+                ['23:59', 0]
+            ];
+
+            dataTable.addRows(wanderingData);
+
+            // Create a view to apply custom style for "1" values
+            var view = new google.visualization.DataView(dataTable);
+            view.setColumns([
+                0,
+                {
+                    calc: function(dataTable, rowIndex) {
+                        // Set a custom style for "1" values (Wandering)
+                        return dataTable.getValue(rowIndex, 1) === 1 ? {v: 1, f: 'Wandering'} : 0;
+                    },
+                    type: 'number',
+                    label: 'Wandering',
+                    p: { style: 'color: red;' } // Red color for "1" values
+                }
+            ]);
+
+            var options = {
+                title: 'Wandering Area Chart',
+                backgroundColor: '#f0f0f0',
+                hAxis: {
+                    title: 'Time',
+                    slantedText: true
+                },
+                vAxis: {
+                    title: 'Wandering Status',
+                    minValue: 0,
+                    maxValue: 1,
+                    ticks: [0, 1]
+                },
+                isStacked: 'relative', // Stack values on top of each other
+                series: {
+                    0: { color: 'blue' } // Color for non-wandering (0)
+                }
+            };
+
+            chart.draw(view, options);
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+
+        #area-chart {
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Chart container -->
+<div id="area-chart"></div>
+
+</body>
+</html>

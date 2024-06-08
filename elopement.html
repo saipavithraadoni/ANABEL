@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="dashboard.css">
+
+    <title>Patient Status Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .status-dot {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: blinking 1s infinite;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        @keyframes blinking {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <h2 style="text-align: center; color: black;" >Elopement</h2>
+    </br>
+    </br>
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>2024-01-08 08:00:00</td>
+            <td>2024-01-08 14:00:00</td>
+            <td><span class="status-dot green"></span>&nbsp;Inside House</td>
+        </tr>
+        
+    </table>
+    <div class="footer">
+        <p>&copy; 2024 Anabel 2.0. All rights reserved.</p>
+    </div>
+</body>
+</html>

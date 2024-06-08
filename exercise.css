@@ -1,0 +1,71 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header h2 {
+    text-align: center;
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+ul li.done {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+ul li img {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+button {
+    margin-left: auto;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: default;
+}
+
+#video-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.done {
+    opacity: 0.5;
+}
+.done-image {
+    /* Style for the done image */
+    width: 24px;  /* Adjust as needed */
+    height: 24px; /* Adjust as needed */
+}
+
+.navigation button {
+    background-image: linear-gradient(to right, rgba(50, 39, 176, 0.7), rgba(64, 166, 177, 0.7));
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

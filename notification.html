@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification Test</title>
+</head>
+<body>
+
+    <h1>Notification Test</h1>
+    <button id="notifyBtn">Show Notification</button>
+
+    <script>
+        document.getElementById('notifyBtn').addEventListener('click', function() {
+            // Check for notification support
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notifications.");
+            }
+
+            // Ask for permission
+            function askNotificationPermission() {
+                // Check if the user has granted permission already
+                if (Notification.permission === "granted") {
+                    showNotification();
+                } else if (Notification.permission !== "denied") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            showNotification();
+                        }
+                    });
+                }
+            }
+
+            // Show notification
+            function showNotification() {
+                const notification = new Notification("Hi there!", {
+                    body: "You clicked the button!",
+                    // icon: "/path/to/icon.png" // Include a path to an icon if you have one
+                });
+
+                notification.onclick = function() {
+                    window.focus(); // Focus the window on click
+                };
+            }
+
+            askNotificationPermission();
+        });
+    </script>
+
+</body>
+</html>

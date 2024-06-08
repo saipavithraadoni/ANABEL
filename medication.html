@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Reminder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        li.done {
+            opacity: 0.5;
+        }
+
+        li.done .done-image {
+            display: inline-block;
+        }
+
+        li.missed {
+            background-color: #f8d7da;
+        }
+
+        .done-image {
+            display: none;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .navigation button {
+            background-image: linear-gradient(to right, rgba(50, 39, 176, 0.7), rgba(64, 166, 177, 0.7));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Medication Reminder</h2>
+    <div class="navigation">
+        <button onclick="window.location.href = 'pwd_dashboard.php';">Home</button>
+    </div>
+    <ul id="medicationList">
+        <li data-time="09:00">
+            <strong>Medicine A</strong> - Take one pill at 09:00
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <li data-time="12:30">
+            <strong>Medicine B</strong> - Take two pills at 12:30
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <li data-time="15:45">
+            <strong>Medicine C</strong> - Take one pill 15:45
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+        <li data-time="23:00">
+            <strong>Medicine D</strong> - Take two pills
+            <button onclick="markAsDone(this)">Mark as Done</button>
+        </li>
+    </ul>
+
+    <script>
+        function markAsDone(button) {
+            const listItem = button.parentElement;
+            listItem.classList.add("done");
+
+            // Notify about the medication taken
+            alert("Medication taken: " + listItem.querySelector("strong").textContent);
+
+            // Disable the button
+            button.disabled = true;
+
+            // Replace the button with a new image
+            const img = document.createElement("img");
+            img.src = "done.png"; // Replace with the path to your done image
+            img.alt = "Done";
+            img.classList.add("done-image");
+
+            // Remove the existing button and append the new image
+            listItem.removeChild(button);
+            listItem.appendChild(img);
+        }
+
+        function scheduleMedicationAlert(time, listItem) {
+            const currentTime = new Date();
+            const scheduledTime = new Date(currentTime.toDateString() + " " + time);
+
+            if (currentTime > scheduledTime) {
+                listItem.classList.add("missed");
+                alert("You missed your scheduled medication time for " + listItem.querySelector("strong").textContent);
+            } else {
+                const timeDiff = scheduledTime - currentTime;
+                setTimeout(() => {
+                    alert("Your medication time is approaching for " + listItem.querySelector("strong").textContent + ". Please be ready to take it in 10 minutes.");
+                }, timeDiff - 10 * 60 * 1000);
+            }
+        }
+
+        const medicationList = document.getElementById("medicationList").querySelectorAll("li");
+        medicationList.forEach((listItem) => {
+            const time = listItem.getAttribute("data-time");
+            scheduleMedicationAlert(time, listItem);
+        });
+    </script>
+</body>
+</html>
