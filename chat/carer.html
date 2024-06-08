@@ -1,14 +1,17 @@
-<!-- Similar to the previous patient.html, just changing the title for clarity -->
+<!-- Similar to the previous carer.html, just changing the title for clarity -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Chat</title>
+    <title>Carer Chat</title>
     <script src="/socket.io/socket.io.js"></script>
+    <style>
+        /* Add your styles here */
+    </style>
 </head>
 <body>
-    <h2>Patient Chat</h2>
+    <h2>Carer Chat</h2>
     <ul id="messages"></ul>
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
@@ -25,7 +28,7 @@
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 if (input.value) {
-                    socket.emit('chat message', { user: 'patient', message: input.value });
+                    socket.emit('chat message', { user: 'carer', message: input.value });
                     input.value = '';
                 }
             });
