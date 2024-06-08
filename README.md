@@ -14,7 +14,7 @@ Follow these steps:
 - Open PHPMyAdmin in your browser and create all the necessary tables.
 - Once the tables are set up, launch the index.html file.
 - Copy the entire content of the provided code to the htdocs directory within your XAMPP extracted folder.
-- Open your preferred web browser and type the following URL in the address bar
+- Open your preferred web browser and type the following URL in the address bar "http://localhost/anabel/"
 
 To run the chat activity in the terminal within the current folder, follow these steps:
 
@@ -26,7 +26,7 @@ npm i --save-dev nodemon
 npm run devStart
 
 
-Data used here is of DS11.
+Data used here is of DS11 from Dem@care.
 
 Login Credentials:
 
